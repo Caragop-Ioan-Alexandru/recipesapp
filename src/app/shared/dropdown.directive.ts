@@ -13,6 +13,7 @@ export class DropdownDirective {
   @HostListener('document:click', ['$event']) toggleOpen(event: Event) {
     if (this.elRef.nativeElement.contains(event.target)) {
       this.isOpen = !this.isOpen;
+      console.log('dropdown activated');
       return;
     }
     this.isOpen = false;

@@ -1,7 +1,6 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { exhaustMap, map, take, tap } from 'rxjs/operators';
-import { AuthService } from '../auth/auth.service';
+import { map, tap } from 'rxjs/operators';
 import { Recipe } from '../recipes/recipe.model';
 import { RecipeService } from '../recipes/recipe.service';
 
@@ -9,19 +8,13 @@ import { RecipeService } from '../recipes/recipe.service';
 export class DataStorageService {
   url =
     'https://ng-http-requests-92ab4-default-rtdb.europe-west1.firebasedatabase.app';
-  constructor(
-    private http: HttpClient,
-    private recipeService: RecipeService,
-    private authService: AuthService
-  ) {}
+  constructor(private http: HttpClient, private recipeService: RecipeService) {}
 
   storeRecipes() {
     const recipes = this.recipeService.getRecipes();
     return this.http
       .put(`${this.url}/recipes.json`, recipes)
-      .subscribe((response) => {
-        console.log(response);
-      });
+      .subscribe((response) => {});
   }
   fetchRecipes() {
     return this.http.get<Recipe[]>(`${this.url}/recipes.json`).pipe(
